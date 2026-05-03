@@ -1,56 +1,40 @@
-const API_URL = 'https://api.green-api.com';
+const getUrl = (method) => {
+    const id = document.getElementById('idInstance').value;
+    const token = document.getElementById('apiTokenInstance').value;
+    return `https://api.green-api.com/waInstance${id}/${method}/${token}`;
+};
 
-// Универсальная функция для отправки запросов
-async function request(method, body = null) {
-    const idInstance = document.getElementById('idInstance').value;
-    const apiToken = document.getElementById('apiTokenInstance').value;
-    const responseField = document.getElementById('responseOutput');
+const showResponse = (data) => {
+    document.getElementById('responseOutput').value = JSON.stringify(data, null, 4);
+};
 
-    if (!idInstance || !apiToken) {
-        alert("Заполните idInstance и ApiTokenInstance!");
-        return;
-    }
-
-    const url = `${API_URL}/waInstance${idInstance}/${method}/${apiToken}`;
-    
-    try {
-        const options = {
-            method: body ? 'POST' : 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        if (body) options.body = JSON.stringify(body);
-
-        const response = await fetch(url, options);
-        const data = await response.json();
-        
-        // Красиво выводим JSON в правое поле
-        responseField.textContent = JSON.stringify(data, null, 4);
-    } catch (error) {
-        responseField.textContent = `Ошибка: ${error.message}`;
-    }
+async function getSettings() {
+    const response = await fetch(getUrl('getSettings'));
+    showResponse(await response.json());
 }
 
-// Привязываем функции к кнопкам
-function getSettings() { request('getSettings'); }
-function getStateInstance() { request('getStateInstance'); }
+async function getStateInstance() {
+    const response = await fetch(getUrl('getStateInstance'));
+    showResponse(await response.json());
+}
 
-function sendMessage() {
+async function sendMessage() {
     const chatId = document.getElementById('chatIdMessage').value;
     const message = document.getElementById('messageText').value;
-    request('sendMessage', { 
-        chatId: `${chatId}@c.us`, 
-        message: message 
+    const response = await fetch(getUrl('sendMessage'), {
+        method: 'POST',
+        body: JSON.stringify({ chatId: `${chatId}@c.us`, message })
     });
+    showResponse(await response.json());
 }
 
-function sendFileByUrl() {
+async function sendFileByUrl() {
     const chatId = document.getElementById('chatIdFile').value;
     const urlFile = document.getElementById('fileUrl').value;
-    const fileName = urlFile.split('/').pop() || 'file';
-    
-    request('sendFileByUrl', {
-        chatId: `${chatId}@c.us`,
-        urlFile: urlFile,
-        fileName: fileName
+    const fileName = urlFile.split('/').pop();
+    const response = await fetch(getUrl('sendFileByUrl'), {
+        method: 'POST',
+        body: JSON.stringify({ chatId: `${chatId}@c.us`, urlFile, fileName })
     });
+    showResponse(await response.json());
 }
