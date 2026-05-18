@@ -1,73 +1,70 @@
 # GREEN-API Тестовое задание (DevOps/Release Engineer)
 
-Клиентское веб-приложение для взаимодействия с WhatsApp через API сервиса [GREEN-API](https://green-api.com/).
+Client web application for interacting with WhatsApp via the [GREEN-API](https://green-api.com/) service.
 
-## 🚀 Особенности проекта
-- **Архитектура:** Чистый JavaScript (Vanilla JS) без тяжелых фреймворков.
-- **Инфраструктура:** Полная контейнеризация через Docker.
-- **Веб-сервер:** Оптимизированный Nginx на базе Alpine Linux.
-- **DevOps-подход:** Проект готов к развертыванию одной командой.
+## 🚀 Project Features
+- **Architecture:** Pure JavaScript (Vanilla JS) without heavy frameworks.
+- **Infrastructure:** Full containerization via Docker.
+- **Web Server:** Optimized Nginx based on Alpine Linux.
+- **DevOps Approach:** The project is ready for one-command deployment.
 
-## 🛠 Технологический стек
+## 🛠 Tech Stack
 - **Frontend:** HTML5, CSS3 (Flexbox), JavaScript (Fetch API).
 - **Web Server:** Nginx.
 - **DevOps:** Docker, Docker Compose.
 
-## 📦 Как запустить проект
+## 📦 How to Run the Project
 
-### 1. Предварительные требования
-Убедитесь, что у вас установлены `docker` и `docker compose`.
+### 1. Prerequisites
+Make sure you have `docker` and `docker compose` installed.
 
-### 2. Запуск контейнера
-Склонируйте репозиторий и выполните команду в корневой папке:
+### 2. Running the Container
+Clone the repository and run the command in the root folder:
 
 ```bash
 docker compose up --build -d
 ```
 ---
 
-# 🏗 Архитектура проекта
-
-Проект организован по принципу разделения ответственности. Веб-сервер Nginx выступает в роли прокси и статического хостинга для фронтенд-части.
+# 🏗 Project Architecture
+The project is organized according to the principle of separation of concerns. The Nginx web server acts as a proxy and static hosting for the frontend part.
 ```text
 green-api-app/
-├── frontend/             # Клиентская часть
-│   ├── index.html        # Разметка интерфейса
-│   ├── style.css         # Стили (двухколоночный макет)
-│   └── app.js            # Логика (Fetch API, работа с методами)
-├── nginx/                # Конфигурация веб-сервера
-│   └── default.conf      # Настройки проксирования статики
-├── Dockerfile            # Сборка образа на базе nginx:stable-alpine
-├── docker-compose.yml    # Описание сервиса для быстрого старта
-└── README.md             # Инструкция и описание (этот файл)
+├── frontend/             # Client side
+│   ├── index.html        # Interface markup
+│   ├── style.css         # Styles (two-column layout)
+│   └── app.js            # Logic (Fetch API, working with methods)
+├── nginx/                # Web server configuration
+│   └── default.conf      # Static proxy settings
+├── Dockerfile            # Image build based on nginx:stable-alpine
+├── docker-compose.yml    # Service description for a quick start
+└── README.md             # Instructions and description (this file)
 ```
 ---
 
-# Доступ к приложению
+# Application Access
 
-После успешного запуска приложение будет доступно по адресу:
+After a successful start, the application will be available at:
 👉 http://localhost:8080
 
 ---
 
-# 📖 Инструкция по использованию
+# 📖 User Guide
 
 ```
 
-Получите ваши idInstance и apiTokenInstance в личном кабинете GREEN-API.
+Get your idInstance and apiTokenInstance in your GREEN-API personal account.
 
-Введите их в соответствующие поля в верхней части приложения.
+Enter them into the corresponding fields at the top of the application.
 
-Используйте кнопки для вызова методов:
+Use the buttons to call methods:
 
-getSettings: получение настроек профиля.
+getSettings: retrieving profile settings.
 
-getStateInstance: проверка статуса авторизации.
+getStateInstance: checking authorization status.
 
-sendMessage: отправка текста (номер вводить в формате 79991234567).
+sendMessage: sending text (enter the number in the format 79991234567).
 
-sendFileByUrl: отправка файла по прямой ссылке.
+sendFileByUrl: sending a file via a direct link.
 
 ```
-
-
